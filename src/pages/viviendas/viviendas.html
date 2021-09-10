@@ -1,0 +1,166 @@
+<ion-header>
+  <ion-navbar>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'DWELLING' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <body>
+
+  <div class="row header" style="background-color: white">
+    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:auto" >{{ 'DWELLING_NAME' | translate }}</div>
+    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:auto">{{ 'CITY' | translate }}</div>
+    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:auto">{{ 'ADDRESS' | translate }}</div>
+
+    <!--div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:20%">+Info</div-->
+
+  </div>
+  <div class="row" *ngFor="let vivienda of viviendaArray" (click)="btnDetalles(vivienda.id, vivienda.nombreVivienda)">
+    <div class="cell">{{vivienda.nombreVivienda}}</div>
+    <div class="cell">{{vivienda.ciudad}}</div>
+    <div class="cell">{{vivienda.ubicacion}}</div>
+    <!--div class="cell" style="align-content: center"><button ion-button color="light" type="button" (click)="btnDetalles(device.serialNumber)">Info</button></div-->
+  </div>
+<br>
+  <div text-center *ngIf="creat === false && erase === false" >
+    <ion-row style="display: block ; justify-content: space-between;">
+      <ion-col col-5>
+      <button ion-button style="background-color: Transparent; border: white; color: #32db64" (click)="btnAnadir()">
+        <ion-icon color="secondary" name="add-circle" ></ion-icon>
+        {{ 'ADD_DWELLING' | translate }}
+      </button>
+
+      </ion-col>
+      <ion-col col-5>
+      <button ion-button style="background-color: Transparent; border: white; color: #f53d3d" (click)="btnBorrar()">
+        <ion-icon color="danger" name="remove-circle"></ion-icon>
+        {{ 'DELETE_DWELLING' | translate }}
+      </button>
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+<div *ngIf="creat === true">
+  <div class="my-header">
+    <h1>{{'ADD_DWELLING' | translate}}</h1>
+  </div>
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmitCreat()" #f=ngForm>
+    <ion-grid formGroupName="viviendaData">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label color="mysh" >{{ 'DWELLING_NAME' | translate }}:</ion-label>
+            <ion-input type="text"
+                       formControlName="nombreVivienda"
+                       [(ngModel)]="vivienda.nombreVivienda">
+            </ion-input>
+          </ion-item>
+          <span *ngIf="!formulario.get('viviendaData.nombreVivienda').valid && formulario.get('viviendaData.nombreVivienda').touched"
+                class="help-block" style="color: crimson">{{ 'NOT_VALID_DATA' | translate }}</span>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label color="mysh" >{{ 'COUNTRY' | translate }}:</ion-label>
+            <ion-input type="text"
+                       formControlName="pais"
+                       [(ngModel)]="vivienda.pais">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      <!--ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh">{{ 'CITY' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="ciudad"
+                     [(ngModel)]="vivienda.ciudad">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh">{{ 'ADDRESS' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="ubicacion"
+                     [(ngModel)]="vivienda.ubicacion">
+
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh">{{ 'POSTAL_CODE' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="codigoPostal"
+                     [(ngModel)]="vivienda.codigoPostal">
+          </ion-input>
+        </ion-item>
+      </ion-col-->
+      <ion-row>
+          <ion-col col-6>
+              <button ion-button color="mysh" [disabled]="!f.valid">{{ 'SAVE' | translate }}</button>
+          </ion-col>
+        <ion-col col-6>
+            <button ion-button color="warning" (click)="btnCancelar()">{{ 'CANCEL' | translate }}</button>
+        </ion-col>
+        <span *ngIf="!formulario.valid && formulario.touched"
+              class="help-block">{{ 'NOT_VALID_DATA' | translate }}</span>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</div>
+<p></p>
+  <div *ngIf="erase === true">
+    <div class="my-header">
+      <h1>{{'DELETE_DWELLING' | translate}}</h1>
+    </div>
+    <form [formGroup]="formulario" (ngSubmit)="onSubmitDelete()" #f=ngForm>
+      <ion-grid formGroupName="viviendaData">
+        <ion-col col-12>
+          <ion-item>
+            <select formControlName="nombreVivienda"
+                    name="nombreVivienda"
+                    [(ngModel)]="vivienda.nombreVivienda">
+              <option color="mysh">{{ 'DWELLING_NAME' | translate }}</option>
+              <option color="mysh" *ngFor="let vivienda of viviendaData" [ngValue]="vivienda" >{{vivienda}}</option>
+            </select>
+          </ion-item>
+          <span *ngIf="!formulario.get('viviendaData.nombreVivienda').valid && formulario.get('viviendaData.nombreVivienda').touched"
+                class="help-block" style="color: crimson">{{ 'NOT_VALID_DATA' | translate }}</span>
+        </ion-col>
+        <ion-row>
+          <ion-col col-6>
+            <button ion-button color="mysh" [disabled]="!f.valid">{{ 'DELETE_BUTTON' | translate }}</button>
+          </ion-col>
+          <ion-col col-6>
+            <button ion-button color="warning" (click)="btnCancelar()">{{ 'CANCEL' | translate }}</button>
+          </ion-col>
+          <span *ngIf="!formulario.valid && formulario.touched"
+                class="help-block">{{ 'NOT_VALID_DATA' | translate }}</span>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+
+  </body>
+</ion-content>
+<ion-footer>
+  <ion-row style="display: block ; justify-content: space-between;">
+    <ion-col col-4>
+      <button ion-button no-lines color="mysh" (click)="btnInformes()">{{ 'REPORTS' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button color="secondary" no-lines (click)="btnLogout()">{{ 'EXIT' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button color="conf" no-lines (click)="btnSettings()">{{ 'SETTINGS_TITLE' | translate }}</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
+
+

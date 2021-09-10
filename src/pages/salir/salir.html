@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'EXIT' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        <ion-item no-lines>
+          <button ion-button color="danger" block (click)="btnSalir()">{{ 'EXIT' | translate }}</button>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item  no-lines>
+          <button ion-button color="secondary" block (click)="btnCancelar()">{{ 'CANCEL' | translate }}</button>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>

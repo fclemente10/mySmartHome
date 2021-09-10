@@ -1,0 +1,182 @@
+<ion-header>
+  <ion-navbar>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'DEVICES_TITLE' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content fullscreen>
+  <form [formGroup]="formulario" #f=ngForm>
+  <ion-grid formGroupName="equipoData">
+    <!--ion-row>
+      <ion-col col-3>
+        <ion-item>
+          <ion-label color="mysh" >Id:</ion-label>
+          <ion-input type="text"
+                     formControlName="id"
+                     [(ngModel)]="infoEquipo.id"
+                     [readonly]="true"></ion-input>
+        </ion-item>
+      </ion-col-->
+    <ion-row>
+      <ion-col col-9>
+        <ion-item>
+          <ion-label color="mysh" >{{ 'SERIAL_NUMBER' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="serialNumber"
+                     [(ngModel)]="infoEquipo.serialNumber"
+                     [readonly]="true"></ion-input>
+          </ion-item>
+      </ion-col>
+    </ion-row>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh">{{ 'NAME' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="nombreEquipo"
+                     placeholder="{{ 'ADD_NAME_DEVICE' | translate }}"
+                     [(ngModel)]="infoEquipo.nombreEquipo"
+                     [readonly]="!editEquipo"></ion-input>
+        </ion-item>
+        <span *ngIf="!formulario.get('equipoData.nombreEquipo').valid && formulario.get('equipoData.nombreEquipo').touched"
+              class="help-block" style="color: crimson">{{ 'REQUIRED_VALID_VALUE' | translate }}</span>
+      </ion-col>
+
+    <ion-col col-12>
+      <ion-item>
+        <ion-label color="mysh">{{ 'DESCRIPTION' | translate }}:</ion-label>
+        <ion-input type="text"
+                   formControlName="descripcion"
+                   [(ngModel)]="infoEquipo.descripcion"
+                   [readonly]="true"></ion-input>
+      </ion-item>
+      <span item-start *ngIf="!formulario.get('equipoData.descripcion').valid && formulario.get('equipoData.descripcion').touched"
+            class="help-block" style="color: crimson">{{ 'NOT_VALID_DATA' | translate }}</span>
+    </ion-col>
+    <ion-col col-12>
+      <ion-item>
+        <ion-label color="mysh">{{ 'UPDATED' | translate }}:</ion-label>
+        <ion-input type="text"
+                   formControlName="lastConn"
+                   [(ngModel)]="infoEquipo.lastConn"
+                   [readonly]=true></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-grid>
+  <ion-grid>
+    <ion-row style="display: block ; justify-content: space-between;">
+      <ion-col col-4 *ngIf="!editEquipo">
+          <button ion-button color="primary" (click)="btnEditar()">{{ 'EDIT' | translate }}</button>
+      </ion-col>
+      <ion-col col-4 *ngIf="editEquipo">
+        <span *ngIf="editEquipo" class="help-block">{{ 'JUST_NAME' | translate }}</span>
+      </ion-col>
+        <ion-col col-4 *ngIf="editEquipo" >
+            <button ion-button color="secondary" (click)="onSubmitCreat()" [disabled]="!f.valid">{{ 'SAVE' | translate }}</button>
+          <span *ngIf="!formulario.valid && formulario.touched"
+                class="help-block">{{ 'NOT_VALID_DATA' | translate }}!</span>
+        </ion-col>
+        <ion-col col-4 *ngIf="editEquipo">
+            <button ion-button color="warning" (click)="doRefresh()">{{ 'CANCEL' | translate }}</button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button color="warning" (click)="btnVolver()">{{ 'BACK_BUTTON_TEXT' | translate }}</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </form>
+
+  <div *ngIf="infoEquipo.descripcion === 'mySH Box'">
+    <div class="my-header">
+      <h1>{{'CONTROL_COMMAND' | translate}}</h1>
+    </div>
+  <form [formGroup]="formArduino" #g=ngForm>
+    <ion-grid formGroupName="arduinoData">
+      <ion-row style="display: block ; justify-content: space-between;">
+        <ion-col col-4>
+            <ion-label color="mysh" class="ion-text-right">{{ 'CONTROL' | translate }}:</ion-label>
+        </ion-col>
+        <ion-col col-4 *ngIf="arduino.onoff === '1'">
+          <button  ion-button no-lines color="danger" (click)="onSubmitON(arduino.serialNumber)" >{{ 'OFF' | translate }}</button>
+        </ion-col>
+        <ion-col col-4 *ngIf="arduino.onoff === '0'" >
+          <button  ion-button no-lines color="secondary" (click)="onSubmitOFF(arduino.serialNumber)" >{{ 'ON' | translate }}</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-label color="mysh" >{{ 'HOW_WORK' | translate }}:</ion-label>
+          <ion-select color="secondary"
+                      placeholder="{{arduino.accion}}"
+                      formControlName="accion"
+                      [(ngModel)]="arduino.accion">
+            <ion-option color="secondary" value="On y Off">{{ 'ON_OFF' | translate }}</ion-option>
+            <ion-option color="secondary" value="Permitido">{{ 'ALLOWED_ON' | translate }}</ion-option>
+            <ion-option color="secondary" value="Prohibido">{{ 'DENIED_ON' | translate }}</ion-option>
+            <ion-option color="secondary" value="Por Hora">{{ 'EVERY_HOUR' | translate }}</ion-option>
+            <ion-option color="secondary" value="Max. Hora">{{ 'MAXIMUM_HOURS' | translate }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-label color="mysh">{{ 'START_TIME' | translate }}:</ion-label>
+          <ion-datetime displayFormat="HH:mm"
+                        formControlName="horaInicio"
+                        [(ngModel)]="arduino.horaInicio"></ion-datetime>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+        <ion-label color="mysh">{{ 'END_TIME' | translate }}</ion-label>
+        <ion-datetime displayFormat="HH:mm"
+                      formControlName="horaFinal"
+                      [(ngModel)]="arduino.horaFinal"></ion-datetime>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <ion-row>
+      <ion-col col-6 style="text-align:right">
+          <button ion-button color="secondary" (click)="onSubmitEquipo()">{{ 'SAVE' | translate }}</button>
+      </ion-col>
+      <ion-col col-6 style="text-align:left">
+        <button ion-button color="danger" style="color: white" (click)="btnVolver()">{{ 'BACK_BUTTON_TEXT' | translate }}</button>
+      </ion-col>
+    </ion-row>
+  </form>
+  </div>
+
+  <div *ngIf="infoEquipo.descripcion !== 'mySH Box'">
+    <div class="my-header">
+      <h1>{{'ALARM_LIST' | translate}}</h1>
+    </div>
+    <div class="row" *ngFor="let alarm of infoAlarmArray" >
+      <ion-item>
+        <ion-label color="mysh">{{ 'ALARM' | translate }}:</ion-label>
+        <ion-input type="text"
+                   color="danger"
+                   placeholder="{{ alarm.dataTime }}"
+                   [readonly]="true"></ion-input>
+      </ion-item>
+    </div>
+    <ion-col *ngIf="infoAlarmArray">
+    <button  ion-button color="warning" (click)="btnBorrarAlarm()" block>{{ 'DELETE_ALARMS' | translate }}</button>
+    </ion-col>
+  </div>
+  <p></p>
+</ion-content>
+<ion-footer>
+  <ion-row style="display: block ; justify-content: space-between;">
+    <ion-col col-4>
+        <button ion-button no-lines color="mysh" (click)="btnInformes()">{{ 'REPORTS' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button color="mysh" no-lines (click)="btnViviendas()">{{ 'DWELLING' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button color="conf" no-lines (click)="btnSettings()">{{ 'SETTINGS_BUTTON' | translate }}</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'REPORTS' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <body>
+
+  <div class="row header" style="background-color: white">
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold; ">{{ 'REPORTS' | translate }}</div>
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold; ">{{ 'SERIAL_NUMBER' | translate }}</div>
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold;"> - </div>
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold; ">{{ 'TENSION' | translate }}</div>
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold;"> - </div>
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold; ">{{ 'CURRENT' | translate }}</div>
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold;"> - </div>
+    <div class="cellInfo" style="background-color: white; color: #ffa500; font-weight: bold; ">{{ 'ELECTRIC_POWER' | translate }}</div>
+    <!--div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:20%">+Info</div-->
+
+  </div>
+  <div class="row" *ngFor="let data of dataEquipo" (click)="btnDetalles(data.serialNumber) ">
+
+    <div class="cellInfo">
+      <img id="myImg" src="{{data.i}}" width="50px" height="50px"/>
+    </div>
+    <div class="cellInfo">{{data.serialNumber}}</div>
+    <div class="cellInfo">-</div>
+    <div class="cellInfo">{{data.tension }}V</div>
+    <div class="cellInfo">-</div>
+    <div class="cellInfo">{{data.corriente }}A</div>
+    <div class="cellInfo">-</div>
+    <div class="cellInfo">{{data.potencia }}W</div>
+    <!--div class="cell" style="align-content: center"><button ion-button color="light" type="button" (click)="btnDetalles(datos.serialNumber)">Info</button></div-->
+
+  </div>
+  </body>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col col-4>
+        <button item-start ion-button no-lines color="mysh" (click)="btnVivienda()">{{ 'DWELLING' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button color="mysh" no-lines (click)="btnNav()">{{ 'DEVICE_TITLE' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button item-end ion-button color="conf" no-lines (click)="btnSettings()">{{ 'SETTINGS_TITLE' | translate }}</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

@@ -1,0 +1,35 @@
+page-salir {
+  .toolbar-background {
+    background: #ffa500;
+  }
+  .table {
+    display: table;
+    width: 100%;
+  }
+  .row {
+    display: table-row;
+  }
+  .cell {
+    display: table-cell;
+    //    width: 30%;
+    height: 50px;
+    border-bottom: 1px solid black;
+    vertical-align: middle;
+    color: #32db64;
+  }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  ion-grid{
+    height: 100%;
+  }
+  ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+}

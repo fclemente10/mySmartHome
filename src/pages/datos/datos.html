@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'DATA' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding [fullscreen]="true">
+  <div class="row" *ngFor="let data of infoEquipoArray">
+    <ion-row>
+      <ion-col col-12>
+        <h1 style="color:#ffa500"> {{ 'DEVICE_TITLE' | translate }}: <span style="color:#32db64"> {{data.nombreEquipo}} </span>  </h1>
+      </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+      <ion-col col-12>
+        <h2 style="color:#ffa500">{{ 'DESCRIPTION' | translate }}: <span style="color:#32db64"> {{data.descripcion}}</span> </h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <h2 style="color:#ffa500">{{ 'UPDATED' | translate }}: <span style="color:#32db64"> {{data.lastConn}}</span> </h2>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!-------------------------- ------------------------------------ -->
+  <ion-card>
+      <ion-card-header *ngIf=" status === true">
+        ONLINE - {{ 'CONSUMING' | translate }} = {{consumoMedio}} Wh
+      </ion-card-header>
+      <ion-card-header *ngIf=" status === false">
+        OFFLINE - {{ 'AVERAGE_CONSUMED' | translate }} = {{consumoMedio}} Wh
+      </ion-card-header>
+    <ion-card-content>
+      <div class="wrapper">
+        <canvas #doughnutCanvas width="auto" height="auto"></canvas>
+      </div>
+    </ion-card-content>
+  <h2 *ngIf=" status === false" style="text-align: center; color: #f53d3d"> {{ 'DEVICE_OFF' | translate }} </h2>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      {{ 'USED_CHART' | translate }}
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+    </ion-card-content>
+  </ion-card>
+  <!---------------------------- ------------------------------------ -->
+</ion-content>
+<ion-footer>
+  <ion-row style="display: block ; justify-content: space-between;">
+    <ion-col col-4>
+      <button ion-button no-lines color="mysh" (click)="btnInformes()">{{ 'REPORT' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button color="mysh" no-lines (click)="btnViviendas()">{{ 'DWELLING' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button color="conf" no-lines (click)="btnSettings()">{{ 'SETTINGS_BUTTON' | translate }}</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

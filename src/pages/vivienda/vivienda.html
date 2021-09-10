@@ -1,0 +1,195 @@
+<ion-header>
+  <ion-navbar>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'DWELLING' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="formulario" (ngSubmit)="onSubmitEditVivienda()" #f=ngForm>
+    <ion-grid formGroupName="viviendaData">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label color="mysh" >{{ 'DWELLING_NAME' | translate }}:</ion-label>
+            <ion-input type="text"
+                       formControlName="nombreVivienda"
+                       placeholder="{{ 'ADD_NAME_DWELLING' | translate }}"
+                       [(ngModel)]="vivienda.nombreVivienda"
+                       [readonly]="!editVivienda"></ion-input>
+          </ion-item>
+          <span *ngIf="!formulario.get('viviendaData.nombreVivienda').valid && formulario.get('viviendaData.nombreVivienda').touched"
+                class="help-block" style="color: crimson">{{ 'REQUIRED_VALID_VALUE' | translate }}</span>
+        </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh">{{ 'COUNTRY' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="pais"
+                     placeholder="{{ 'ADD_COUNTRY_NAME' | translate }}"
+                     [(ngModel)]="vivienda.pais"
+                     [readonly]="!editVivienda"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh">{{ 'CITY' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="ciudad"
+                     placeholder="{{ 'ADD_CITY_NAME' | translate }}"
+                     [(ngModel)]="vivienda.ciudad"
+                     [readonly]="!editVivienda"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh">{{ 'ADDRESS' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="ubicacion"
+                     [(ngModel)]="vivienda.ubicacion"
+                     [readonly]="!editVivienda"></ion-input>
+        </ion-item>
+      </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label color="mysh">{{ 'POSTAL_CODE' | translate }}:</ion-label>
+            <ion-input type="text"
+                       formControlName="codigoPostal"
+                       [(ngModel)]="vivienda.codigoPostal"
+                       [readonly]="!editVivienda"></ion-input>
+          </ion-item>
+        </ion-col>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          <span *ngIf="!editVivienda">
+            <button ion-button color="primary" (click)="btnEditarVivienda()">{{ 'EDIT' | translate }}</button>
+          </span>
+        </ion-col>
+        <ion-col col-4>
+          <span *ngIf="editVivienda">
+          </span>
+        </ion-col>
+        <ion-col col-4>
+          <span *ngIf="editVivienda" no-lines>
+            <button ion-button color="secondary" [disabled]="!f.valid">{{ 'SAVE' | translate }}</button>
+          </span>
+          <span *ngIf="!formulario.valid && formulario.touched"
+                class="help-block">{{ 'NOT_VALID_DATA' | translate }}!</span>
+        </ion-col>
+        <ion-col col-4>
+          <span *ngIf="editVivienda" no-lines>
+            <button ion-button color="warning"  (click)="doRefresh()">{{ 'CANCEL' | translate }}</button>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <hr>
+  <div class="row header" style="background-color: white">
+    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:auto">Id</div>
+    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:auto" >{{ 'ROOM_NAME' | translate }}</div>
+    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:auto">{{ 'DEVICE_TITLE' | translate }}</div>
+    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:auto">{{ 'EDIT' | translate }}</div>
+
+    <!--div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:20%">+Info</div-->
+  </div>
+  <div class="row" *ngFor="let habitacion of habitacionArray">
+    <div class="cell">{{habitacion.id}}</div>
+    <div class="cell">{{habitacion.nombreHabitacion}}</div>
+    <div class="cell">{{habitacion.serialNumber}}</div>
+    <div class="cell">
+      <button ion-button color="mysh" (click)="btnEditarHab(habitacion.nombreHabitacion)">{{ 'EDIT' | translate }}</button>
+    </div>
+    <!--div class="cell" style="align-content: center"><button ion-button color="light" type="button" (click)="btnDetalles(device.serialNumber)">Info</button></div-->
+  </div>
+  <div text-center *ngIf="!creatHab" >
+    <ion-buttons>
+      <button ion-button style="background-color: Transparent; border: white" large >
+        <ion-icon color="secondary" name="add-circle" style="zoom:200%;" (click)="btnAnadirHabitacion() "></ion-icon>
+      </button>
+      <p>{{ 'ADD_ROOM' | translate }}</p>
+    </ion-buttons>
+  </div>
+
+  <form *ngIf="editHabitacion || creatHab" [formGroup]="formularioHab" (ngSubmit)="onSubmitCreatHab()" #g=ngForm>
+    <ion-grid formGroupName="habitacionData">
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh" >Id:</ion-label>
+          <ion-input type="text"
+                     formControlName="id"
+                     placeholder="{{ 'AUTOMATIC' | translate }}"
+                     [(ngModel)]="habitacion.id"
+                     [readonly]="true">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh" >{{ 'DWELLING_NAME' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="nombreVivienda"
+                     [(ngModel)]="vivienda.nombreVivienda"
+                     [readonly]="true"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh" >{{ 'ROOM_NAME' | translate }}:</ion-label>
+          <ion-input type="text"
+                     formControlName="nombreHabitacion"
+                     placeholder="{{ 'ADD_ROOM' | translate }}"
+                     [(ngModel)]="habitacion.nombreHabitacion">
+          </ion-input>
+        </ion-item>
+        <span *ngIf="!formularioHab.get('habitacionData.nombreHabitacion').valid && formularioHab.get('habitacionData.nombreHabitacion').touched"
+              class="help-block" style="color: crimson">{{ 'REQUIRED_VALID_VALUE' | translate }}</span>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label color="mysh" >{{ 'SERIAL_NUMBER' | translate }}:</ion-label>
+          <ion-select formControlName="serialNumber" name="serialNumber" [(ngModel)]="habitacion.serialNumber">
+            <ion-option *ngFor="let serial of serialData" [value]="serial" >{{serial}}</ion-option>
+            <!--ion-option value="none" >1</ion-option>
+            <ion-option value="caca" >2</ion-option-->
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <span>
+          <button ion-button color="secondary" [disabled]="!g.valid">{{ 'SAVE' | translate }}</button>
+        </span>
+        <span *ngIf="!formularioHab.valid && formularioHab.touched"
+              class="help-block">{{ 'NOT_VALID_DATA' | translate }}!</span>
+      </ion-col>
+      <ion-col col-6>
+              <button ion-button color="warning"  (click)="doRefresh()">{{ 'CANCEL' | translate }}</button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+
+
+</ion-content>
+<ion-footer>
+  <ion-row style="display: block ; justify-content: space-between;">
+    <ion-col col-4>
+      <button ion-button no-lines color="mysh" (click)="btnInformes()">{{ 'REPORTS' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button color="mysh" no-lines (click)="btnEquipos()">{{ 'DEVICES_TITLE' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button color="conf" no-lines (click)="btnSettings()">{{ 'SETTINGS_TITLE' | translate }}</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
+
+
