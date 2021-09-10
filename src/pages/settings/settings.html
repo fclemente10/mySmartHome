@@ -1,45 +1,118 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>{{ pageTitle }}</ion-title>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'SETTINGS_TITLE' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-<ion-content>
-
+<ion-content padding>
+<ion-grid>
   <form [formGroup]="form" *ngIf="settingsReady">
     <ion-list *ngIf="page == 'main'">
       <ion-item>
         <ion-label>{{ 'SETTINGS_OPTION1' | translate }}</ion-label>
-        <ion-toggle formControlName="option1"></ion-toggle>
+        <ion-toggle formControlName="tutorial"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>{{ 'SETTINGS_OPTION2' | translate }}</ion-label>
-        <ion-input formControlName="option2"></ion-input>
-      </ion-item>
+        <ion-select formControlName="language">
+          <ion-option value="es" checked="true">Español</ion-option>
+          <ion-option value="en">English</ion-option>
+          <ion-option value="pt-br">Português</ion-option>
+          <ion-option value="de">Deutsche</ion-option>
+          <ion-option value="ar">عربى</ion-option>
+          <ion-option value="bs">Bosanski</ion-option>
+          <ion-option value="da">Dansk</ion-option>
+          <ion-option value="el">Ελληνικά</ion-option>
+          <ion-option value="eu">Vasco</ion-option>
+          <ion-option value="fr">Français</ion-option>
+          <ion-option value="it">Italiano</ion-option>
+          <ion-option value="ja">日本語</ion-option>
+          <ion-option value="nb_NO">Norsk</ion-option>
+          <ion-option value="pl">Polskie</ion-option>
+          <ion-option value="ru">Pусский </ion-option>
+          <ion-option value="sk">Slovak </ion-option>
 
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION3' | translate }}</ion-label>
-        <ion-select formControlName="option3">
-          <ion-option value="1" checked="true">1</ion-option>
-          <ion-option value="2">2</ion-option>
-          <ion-option value="3">3</ion-option>
         </ion-select>
       </ion-item>
 
-      <button ion-item [navPush]="subSettings" [navParams]="profileSettings">
+      <button [disabled]="!user.isLoggedIn()" ion-button [navPush]="subSettings" [navParams]="profileSettings">
         {{ 'SETTINGS_PROFILE_BUTTON' | translate }}
       </button>
     </ion-list>
+    <span *ngIf="!user.isLoggedIn()"
+          class="help-block">{{ 'EDIT_PROFILE_NEED_LOGIN' | translate }}!</span>
 
     <ion-list *ngIf="page == 'profile'">
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION4' | translate }}</ion-label>
-        <ion-input formControlName="option4"></ion-input>
-      </ion-item>
+      <!--div class="row" *ngFor="let data of arrayUser"-->
+      <form [formGroup]="formulario"  (ngSubmit)="onSubmitCreat()" #f=ngForm>
+        <ion-grid formGroupName="userData">
+          <ion-item>
+            <ion-label>{{ 'NAME' | translate }}</ion-label>
+            <ion-input type="text"
+                       formControlName="nombre"
+                       [(ngModel)]="usuario.nombre"
+                       [readonly]=true>
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{ 'SURNAME' | translate }}</ion-label>
+            <ion-input type="text"
+                       formControlName="apellido"
+                       [(ngModel)]="usuario.apellido"
+                       [readonly]=true></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>{{ 'EMAIL' | translate }}</ion-label>
+            <ion-input type="email"
+                       formControlName="email"
+                       value="{{usuario.email}}"
+                       [readonly]=true></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>{{ 'PASSWORD' | translate }}</ion-label>
+            <ion-input type="password" formControlName="contrasena" value="{{usuario.contrasena}}" ></ion-input>
+          </ion-item>
+          <span *ngIf="!formulario.get('userData.contrasena').valid && formulario.get('userData.contrasena').touched"
+                class="help-block" style="color: crimson">{{ 'MINIMUN_6' | translate }}</span>
+
+          <ion-item>
+            <ion-label>{{ 'CONFIRM_PASSWORD' | translate }}</ion-label>
+            <ion-input type="password" formControlName="checkContrasena"></ion-input>
+          </ion-item>
+          <span *ngIf="!formulario.get('userData.checkContrasena').valid && formulario.get('userData.checkContrasena').touched"
+                class="help-block" style="color: crimson">{{ 'PASSWORD_NOT_MATCH' | translate }}</span>
+        </ion-grid>
+        <ion-row *ngIf="page == 'profile'" style="display: block ; justify-content: space-between;">
+            <ion-grid>
+              <button ion-button color="secondary" [disabled]="!f.valid">{{ 'SAVE' | translate }}</button>
+              <span *ngIf="!formulario.valid && formulario.touched"
+                    class="help-block">{{ 'NOT_VALID_DATA' | translate }}!</span>
+            </ion-grid>
+        </ion-row>
+      </form>
+      <ion-row *ngIf="page == 'profile'" style="display: block ; justify-content: space-between;">
+        <ion-grid >
+          <button ion-button color="warning" (click)="btnCancel()">{{ 'CANCEL' | translate }}</button>
+        </ion-grid>
+      </ion-row>
+
     </ion-list>
   </form>
-
+ <ion-row *ngIf="page !== 'profile'">
+   <ion-grid >
+     <button ion-button color="mysh" (click)="btnReload()">{{ 'APPLY_CHANGES' | translate }}</button>
+   </ion-grid>
+ </ion-row>
+  <ion-row>
+    <ion-grid *ngIf="user.isLoggedIn()">
+      <button ion-button color="danger" (click)="btnExit()">{{ 'EXIT' | translate }}</button>
+    </ion-grid>
+  </ion-row>
+</ion-grid>
 </ion-content>

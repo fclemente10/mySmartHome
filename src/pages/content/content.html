@@ -1,13 +1,83 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Content
-    </ion-title>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'DEVICES_TITLE' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <p>
-    This is a perfect starting point for a page with primarily text content. The body is padded nicely and ready for prose.
-  </p>
+  <body>
+  <div>
+    <h1><p style="color:#ffa500"> {{ 'HELLO' | translate }}, {{usuario}} !</p> </h1>
+  </div>
+  <!-- empiezo de pruebas -->
+  <div class="addScroll">
+  <div class="row" *ngFor="let device of infoEquipoArray" (click)="btnDetalles(device.serialNumber)">
+
+    <div *ngIf=" device.descripcion === 'mySH Box' ">
+      <ion-card  color="mysh2" align="center">
+        <ion-card-header>
+          <!--ion-card-header>{{device.id}}</ion-card-header-->
+          <ion-card-title>{{device.nombreEquipo}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          {{device.descripcion}}
+          <ion-icon name="home" slot="start"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf=" device.descripcion === 'mySH App Alarm' ">
+      <ion-card  color="secondary2" align="center" >
+        <ion-card-header>
+          <!--ion-card-header>{{device.id}}</ion-card-header-->
+          <ion-card-title>{{device.nombreEquipo}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          {{device.descripcion}}
+          <ion-icon name="walk" slot="start"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+  </div>
+
+    <!--div class="row header" style="background-color: white">
+      <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold;">Id</div>
+      <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold;"> - </div>
+      <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold;">{{ 'NAME' | translate }}</div>
+      <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold;"> - </div>
+      <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold;">{{ 'SERIAL_NUMBER' | translate }}</div>
+  linea comentada    <div class="cell" style="background-color: white; color: #ffa500; font-weight: bold; width:20%">+Info</div>
+
+    </div>
+    <div class="row" *ngFor="let device of infoEquipoArray" (click)="btnDetalles(device.serialNumber)">
+      <div class="cell">{{device.id}}</div>
+      <div class="cell"> - </div>
+      <div class="cell">{{device.nombreEquipo}}</div>
+      <div class="cell"> - </div>
+      <div class="cell">{{device.serialNumber}}</div>
+  linea comentada    <div class="cell" style="align-content: center"><button ion-button color="light" type="button" (click)="btnDetalles(device.serialNumber)">Info</button></div>
+    </div-->
+  </div>>
+  </body>
+
 </ion-content>
+<ion-footer>
+  <ion-row style="display: block ; justify-content: space-between;">
+    <ion-col col-4>
+        <button ion-button no-lines color="mysh" (click)="btnInformes()">{{ 'REPORTS' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button color="mysh" no-lines (click)="btnViviendas()">{{ 'DWELLING' | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button color="conf" no-lines (click)="btnSettings()">{{ 'SETTINGS_TITLE' | translate }}</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
+
+

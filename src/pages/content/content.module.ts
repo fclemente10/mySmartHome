@@ -8,10 +8,10 @@ import { ContentPage } from './content';
   declarations: [
     ContentPage,
   ],
-  imports: [
-    IonicPageModule.forChild(ContentPage),
-    TranslateModule.forChild()
-  ],
+    imports: [
+        IonicPageModule.forChild(ContentPage),
+        TranslateModule.forChild(),
+    ],
   exports: [
     ContentPage
   ]

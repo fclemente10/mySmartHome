@@ -2,7 +2,7 @@
 // http://ionicframework.com/docs/v2/theming/
 $font-path: "../assets/fonts";
 
-@import "ionic.globals";
+@import 'ionic.globals';
 
 
 // Shared Variables
@@ -27,9 +27,16 @@ $background-color:  #fff;
 $colors: (
   primary:    #488aff,
   secondary:  #32db64,
+  secondary2: #b1f6c5,
+  warning:    #ffff00 ,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  mysh:       #ffa500,
+  mysh2:      #f8ddab,
+  faded:      #f7f7f7,
+  inverse:    #292b2c,
+  conf:       #c8c8c8,
 );
 
 

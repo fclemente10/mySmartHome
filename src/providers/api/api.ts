@@ -1,12 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-/**
- * Api is a generic REST Api handler. Set your API url first.
- */
+export const ip = '2.139.215.161';//'ec2-15-236-19-45.eu-west-3.compute.amazonaws.com';//'192.168.56.1'
+// 'ec2-35-180-204-107.eu-west-3.compute.amazonaws.com'//'192.168.56.1'; // '192.168.1.232'//'192.168.0.61';
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+  url: string = 'http://'+ ip +':3000/api/v1';
 
   constructor(public http: HttpClient) {
   }

@@ -1,44 +1,66 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>{{ 'SIGNUP_TITLE' | translate }}</ion-title>
+    <ion-card-title text-center color="light" style="font-size: 40px">{{ 'SIGNUP_TITLE' | translate }}</ion-card-title>
+    <ion-buttons right>
+      <img side="right" end src="/assets/img/logo_02.png" width="60px" height="85px"/>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content>
-  <form (submit)="doSignup()">
-    <ion-list>
-
+  <form [formGroup]="formulario" (submit)="doSignup()" #f=ngForm>
+    <ion-list formGroupName= "userData">
       <ion-item>
-        <ion-label fixed>{{ 'NAME' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="account.name" name="name"></ion-input>
+        <ion-label>{{ 'NAME' | translate }}</ion-label>
+        <ion-input type="text" id="nombre" formControlName="nombre"  value="{{usuario.nombre}}"></ion-input>
       </ion-item>
+      <span *ngIf="!formulario.get('userData.nombre').valid && formulario.get('userData.nombre').touched"
+            class="help-block" style="color: crimson">{{ 'REQUIRED_VALID_VALUE' | translate }}</span>
 
-      <ion-item>
-        <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label>{{ 'SURNAME' | translate }}</ion-label>
+          <ion-input type="text" id="apellido" formControlName="apellido"  value="{{usuario.apellido}}"></ion-input>
+        </ion-item>
+        <span *ngIf="!formulario.get('userData.apellido').valid && formulario.get('userData.apellido').touched"
+              class="help-block" style="color: crimson">{{ 'REQUIRED_VALID_VALUE' | translate }}</span>
 
-      <!--
-      Want to add a Username? Here you go:
+        <ion-item>
+          <ion-label>{{ 'EMAIL' | translate }}</ion-label>
+          <ion-input type="email" id="email" formControlName="email" value="{{usuario.email}}"></ion-input>
+        </ion-item>
+        <span *ngIf="!formulario.get('userData.email').valid && formulario.get('userData.email').touched"
+              class="help-block" style="color: crimson">{{ 'REQUIRED_VALID_VALUE' | translate }}</span>
 
-      <ion-item>
-        <ion-label floating>Username</ion-label>
-        <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
-      </ion-item>
-      -->
+        <ion-item>
+          <ion-label>{{ 'PASSWORD' | translate }}</ion-label>
+          <ion-input type="password" formControlName="contrasena" value="{{usuario.contrasena}}" ></ion-input>
+        </ion-item>
+        <span *ngIf="!formulario.get('userData.contrasena').valid && formulario.get('userData.contrasena').touched"
+              class="help-block" style="color: crimson">{{ 'MINIMUN_6' | translate }}</span>
 
-      <ion-item>
-        <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label>{{ 'CONFIRM_PASSWORD' | translate }}</ion-label>
+          <ion-input type="password" formControlName="checkContrasena"></ion-input>
+        </ion-item>
+        <span *ngIf="!formulario.get('userData.checkContrasena').valid && formulario.get('userData.checkContrasena').touched"
+             class="help-block" style="color: crimson">{{ 'PASSWORD_NOT_MATCH' | translate }}</span>
 
-      <div padding>
-        <button ion-button color="primary" block>{{ 'SIGNUP_BUTTON' | translate }}</button>
-      </div>
+        <ion-item>
+          <ion-label>
+            <ion-checkbox formControlName="cb"></ion-checkbox>
+            <span class="form-check-sign"> </span> {{ 'AGREE' | translate }}
+            <a href="javascript:void(0)"> {{ 'TERMS' | translate }} </a> .
+          </ion-label>
+        </ion-item>
+        <span *ngIf="!formulario.get('userData.cb').valid && formulario.get('userData.cb').touched"
+              class="help-block" style="color: crimson">{{ 'ACCEPT_TERMS' | translate }}</span>
 
-    </ion-list>
+
+        <div padding>
+          <button ion-button color="primary" [disabled]="!f.valid" block>{{ 'SIGNUP_BUTTON' | translate }}</button>
+          <span *ngIf="!formulario.valid && formulario.touched"
+                class="help-block">{{ 'NOT_VALID_DATA' | translate }}!</span>
+        </div>
+      </ion-list>
   </form>
 </ion-content>

@@ -14,3 +14,135 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.my-custom-class {
+  --background: #ffa500;// #e5e5e5;
+}
+.my-header {
+  padding: -5px;
+  text-align: center;
+  background: #32db64;
+  color: white;
+  font-size: 10px;
+}
+.toolbar-background {
+  background: #ffa500;
+}
+ion-input{
+  //    width: auto;
+  font-size: 18px;
+  font-weight: bold;
+  color: #32db64;
+}
+ion-label{
+  font-size: 18px;
+  font-weight: bold;
+  vertical-align: middle;
+  color: #ffa500;
+  text-align: right;
+  clear: both;
+  float:left;
+  margin-right:15px;
+}
+ion-grid{
+  height: 100%;
+}
+
+ion-row{
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  height: 100%;
+}
+
+//ion-card{
+//  display: flex;
+//  flex-direction: column;
+//  width: 80% !important;
+//  margin: 0 !important;
+//}
+
+ion-card {
+
+  img {
+    margin: 10px auto;
+    height: 25vh !important;
+    width: auto !important;
+    max-width: 85%;
+    align-items: center;
+  }
+
+  ion-card-content {
+    padding: 0 !important;
+    justify-content: center;
+
+    ion-card-title {
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+  }
+}
+
+.table {
+  display: table;
+  width: 100%;
+}
+.row {
+  display: table-row;
+}
+.cell {
+  display: table-cell;
+  width: fit-content;
+  height: 50px;
+  border-bottom: 1px solid black;
+  vertical-align: middle;
+  text-align: center;
+  color: #32db64;
+  padding: 0px 15px 15px 5px;
+
+}
+.cellInfo {
+  display: table-cell;
+  width: fit-content;
+  height: 50px;
+  border-bottom: 1px solid black;
+  vertical-align: middle;
+  text-align: center;
+  color: #32db64;
+  padding: -2px 12px 15px -5px;
+
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+ion-option{
+  font-size: 18px;
+  font-weight: bold;
+  color: #32db64;
+}
+ion-select{
+  max-width: 100% !important;
+  font-size: 18px;
+  font-weight: bold;
+  color: #32db64;
+}
+ion-datetime{
+  font-size: 18px;
+  font-weight: bold;
+  color: #32db64;
+}
+hr {
+  border: 2px solid rgba(255, 165, 0, 0.19) !important;
+  height: 2px !important;
+  width: 100% !important;
+  background: rgba(68, 239, 6, 0.29) !important;
+  display: block !important;
+  font-size: 2em !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+
